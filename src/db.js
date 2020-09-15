@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 
-require('./config/config')
-
 require("dotenv").config()
-
 // const db = process.env.DB
 
+require('./config/config')
 mongoose.connect(process.env.URLDB,{
     useCreateIndex: true,
     useUnifiedTopology:true,
