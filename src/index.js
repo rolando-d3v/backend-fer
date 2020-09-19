@@ -17,3 +17,4 @@ app.use(bodyParser.json())
 
 //routers
 app.use('/', require('./routers/usuario'))
+app.use('/', require('./routers/Login'))
