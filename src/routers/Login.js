@@ -1,4 +1,6 @@
 const {Router} = require('express');
+
+//MIDDLEWARE DE AUTHORIZATION
 const {verificaToken} = require('../middlewares/auth');
 
 const router = Router()

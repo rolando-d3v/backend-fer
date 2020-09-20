@@ -10,6 +10,6 @@ const { getUsuarios, postUsuario, updateUsuario, deleteUsuario } = require("../c
 router.get("/usuarios", verificaToken, getUsuarios);
 router.post('/usuarios', postUsuario)
 router.put('/usuarios/:IdUsuario', updateUsuario)
-router.delete('/usuarios/:IdUsuario', deleteUsuario)
+router.delete('/usuarios/:IdUsuario', verificaToken, deleteUsuario)
 
 module.exports = router;
