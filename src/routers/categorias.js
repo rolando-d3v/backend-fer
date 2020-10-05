@@ -9,7 +9,7 @@ const router = Router()
 
 router.get("/categoria", obtenerCategorias);
 router.get("/categoria/:idCategoria", obtenerCategoria);
-router.post("/categoria", createCategorias);
+router.post("/categoria", verificaToken, createCategorias);
 router.put("/categoria/:idCategoria", updateCategorias);
 router.delete("/categoria/:idCategoria", removeCategorias);
 
