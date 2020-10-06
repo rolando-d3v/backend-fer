@@ -25,8 +25,16 @@ exports.obtenerCategoria = async (req, res) => {
 //CREAR CATEGORIAS
 exports.createCategorias = async (req, res) => {
   try {
-    const categoria = new categoriaModel(req.body);
-    res.json({ ok: true, message: "categoria creada successfully" });
+    const categoria = new categoriaModel({
+      descripcion: req.body.descripcion,
+      usuario: req.usuario.id,
+    });
+
+    res.json({
+      ok: true,
+      message: "categoria creada successfully",
+      usuario: req.usuario,
+    });
     await categoria.save();
   } catch (error) {
     res.send(error);
@@ -36,10 +44,10 @@ exports.createCategorias = async (req, res) => {
 //ACTUALIZAR LAS CATEGORIAS
 exports.updateCategorias = async (req, res) => {
   try {
-    const categoria = categoriaModel.findOneAndUpdate(
+    const categoria = await categoriaModel.findOneAndUpdate(
       { _id: req.params.idCategoria },
-      req.body,
-      { new: true }
+      { descripcion: req.body.descripcion },
+      { new: true, runValidators: true }
     );
     res.json(categoria);
   } catch (error) {
