@@ -66,3 +66,6 @@ exports.removeCategorias = async (req, res) => {
     res.send(error);
   }
 };
+
+
+console.log();

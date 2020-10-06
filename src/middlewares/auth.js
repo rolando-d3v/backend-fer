@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-
 require("../config/config");
 
 //=========================
@@ -19,6 +18,7 @@ exports.verificaToken = (req, res, next) => {
   //     throw err
   //   }
 
+
   // SEGUNDA FORMA DE HACER
   jwt.verify(token, process.env.SECRET, (err, usuarioDecoded) => {
     if (err) {
@@ -31,6 +31,9 @@ exports.verificaToken = (req, res, next) => {
   });
   next();
 };
+
+
+
 
 //==============================
 // AUTHORIZATION PARA USER ADMIN

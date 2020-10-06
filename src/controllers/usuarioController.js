@@ -1,7 +1,7 @@
 const UsuarioModel = require("../models/usuarioModel");
 const _ = require("underscore");
 
-//obtiene all usuarios
+//OBTIENE TODOS LOS USUARIOS
 exports.getUsuarios = async (req, res, next) => {
 
   let limite = parseInt(req.query.limite) || 5; // convierte a un string a un numero primera forma
@@ -29,7 +29,7 @@ exports.getUsuarios = async (req, res, next) => {
   }
 };
 
-// create usuarios
+//ENDPOINT CREAR USUARIO
 exports.postUsuario = async (req, res, next) => {
   try {
     const usuario = new UsuarioModel(req.body);
@@ -65,9 +65,8 @@ exports.updateUsuario = async (req, res, next) => {
   }
 };
 
-//Elimina un usuario en forma de estado : false o true
+//Elimina un usuario CAMBIANDO SU ESTADO => false o true
 exports.deleteUsuario = async (req, res, next) => {
-
   let cambiaEstado = { estado: false }
 
   try {
