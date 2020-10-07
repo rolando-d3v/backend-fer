@@ -1,9 +1,12 @@
+const { populate } = require("../models/categoriaModel");
 const categoriaModel = require("../models/categoriaModel");
 
 //OBTENER  TODAS LAS CATEGORIAS
 exports.obtenerCategorias = async (req, res) => {
   try {
-    const categoria = await categoriaModel.find({});
+    const categoria = await categoriaModel
+      .find({})
+      .populate("usuario", { password: 0 });
     res.json(categoria);
   } catch (error) {
     res.send(error);
@@ -14,9 +17,15 @@ exports.obtenerCategorias = async (req, res) => {
 exports.obtenerCategoria = async (req, res) => {
   try {
     const categoria = await categoriaModel.findById({
-      _id: req.params.idCategoria,
-    });
-    res.json(categoria);
+      _id: req.params.idCategoria
+    }).populate('usuario', {password: 0})
+    
+    if(!categoria) {
+      res.json({ok: false, message: 'ID  categoria no existe'});
+    } else {
+      res.json(categoria);
+    }
+
   } catch (error) {
     res.send(error);
   }
@@ -61,11 +70,16 @@ exports.removeCategorias = async (req, res) => {
     const categoria = await categoriaModel.findOneAndRemove({
       _id: req.params.idCategoria,
     });
-    res.json({ ok: true, message: "categoria creada successfully" });
+
+    if (!categoria) {
+      res.status(400).json({ ok: false, message: "categoria no existe" });
+    } else {
+      res.status(200).json({ ok: true, message: "categoria delete successfully" });
+    }
+    
   } catch (error) {
     res.send(error);
   }
 };
-
 
 console.log();
