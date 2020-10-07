@@ -21,7 +21,7 @@ exports.postLogin = async (req, res, next) => {
     let token = jwt.sign(
       { id: userEmail._id, email: userEmail.email, nombre: userEmail.nombre, role: userEmail.role },
       process.env.SECRET,
-      { expiresIn: 60 * 60 }
+      { expiresIn: 60 * 60 * 12 }
     );
 
     res.json({
