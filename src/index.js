@@ -12,10 +12,11 @@ app.listen(port, () => {
 });
 
 //para enviar datos del postman
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 //routers
 app.use('/', require('./routers/usuario'))
 app.use('/', require('./routers/Login'))
 app.use('/', require('./routers/categorias'))
+app.use('/', require('./routers/productos'))
