@@ -1,3 +1,4 @@
+const { populate } = require('../models/productoModel');
 const productoModel = require('../models/productoModel')
 
 //OBTENER TODOS LOS PRODUCTOS
@@ -5,7 +6,12 @@ exports.getProductos = async (req, res) => {
   try {
     const producto = await productoModel
       .find({})
-      .populate("usuario", { password: 0 });
+      .populate("usuario", { password: 0 })
+      .populate({
+        path: "categoria",
+        populate: { path: "usuario" }
+      })
+
     res.json(producto);
   } catch (error) {
     res.send(error);
@@ -27,7 +33,7 @@ exports.getProducto = async (req, res) => {
         res.send(error)
     }
 }
-
+    
 
 //CREA UN PRODUCTO
 exports.createProducto = async (req, res) => {
@@ -42,18 +48,38 @@ exports.createProducto = async (req, res) => {
     });
     await producto.save();
     res.json({ ok: true, message: "producto create successfully", producto });
-    
+
   } catch (error) {
     res.send(error);
-  }
+}
 };
 
 //UPDATE UN PRODUCTO
 exports.updateProducto = async (req, res) => {
-    res.json({ok: 'rolando'})
-}
+  try {
+    const producto = await productoModel.findOneAndUpdate(
+      { _id: req.params.idProducto },
+      req.body,
+      { new: true, runValidators: true }
+    );
+   
+    if (!producto) {
+        res.json({message: 'id de producto no found'})
+    } else {
+        res.json(producto)
+    }
+  } catch (error) {
+    res.send(error);
+  }
+
+};
 
 //REMOVE UN PRODUCTO
 exports.removeProducto = async (req, res) => {
-    res.json({ok: 'rolando'})
+    try {
+        const producto = await productoModel.findOneAndDelete({_id: req.params.idProducto})
+        res.json({ok: true, message: 'producto eleminado successfully'})
+    } catch (error) {
+        res.json(error)
+    }
 }

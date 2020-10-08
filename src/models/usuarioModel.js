@@ -9,6 +9,7 @@ const rolesValidos = {
   message: "{VALUE} no es un rol valido ",
 };
 
+//ESQUEMA DE USUARIO
 const usuarioSchema = new Schema(
   {
     nombre: {
@@ -47,10 +48,21 @@ const usuarioSchema = new Schema(
   }
 );
 
-// encriptar password
+
+//FUNCION PARA NO MOSTRAR EL PASSWORD EN EL JSON DEL BACK-END
+usuarioSchema.methods.toJSON = function() {
+  let user = this;
+  let userObject = user.toObject();
+  delete userObject.password;
+
+  return userObject;
+}
+
+
+// ENCRIPTAR PASSWORD
 usuarioSchema.methods.encryptPassword = async (password) => {
     const salt = await bcrypt.genSalt(10)  // genSalt cuanta veces se realiza el cifrado
-    return  bcrypt.hash(password, salt)  // hash se encatag de cifrar el string a un cripto
+    return  bcrypt.hash(password, salt)  // hash se encarga de cifrar el string a un cripto
 }
 
 module.exports = model("Usuario", usuarioSchema);
