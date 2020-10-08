@@ -31,20 +31,22 @@ exports.getProducto = async (req, res) => {
 
 //CREA UN PRODUCTO
 exports.createProducto = async (req, res) => {
-    try {
-        const producto = new productoModel({
-            nombre: req.body.nombre,
-            precioUni: req.body.precioUni,
-            disponible: req.body.disponible,
-            usuario: req.usuario.id,
-            categoria: req.usuario.categoria 
-        })
-        await producto.save()
-        res.json({ok: true, message: 'producto create successfully'})
-    } catch (error) {
-        res.send(error)
-    }
-}
+  try {
+    const producto = new productoModel({
+      nombre: req.body.nombre,
+      precioUni: req.body.precioUni,
+      disponible: req.body.disponible,
+      descripcion: req.body.descripcion,
+      categoria: req.body.categoria,
+      usuario: req.usuario.id,
+    });
+    await producto.save();
+    res.json({ ok: true, message: "producto create successfully", producto });
+    
+  } catch (error) {
+    res.send(error);
+  }
+};
 
 //UPDATE UN PRODUCTO
 exports.updateProducto = async (req, res) => {
