@@ -6,11 +6,11 @@ const {getProductos, getProducto, createProducto, updateProducto, removeProducto
 
 const router = Router()
 
-router.get('/productos', getProductos)
-router.get('/productos/:idProducto', getProducto)
+router.get('/productos',  getProductos)
+router.get('/productos/:idProducto', verificaToken, getProducto)
 router.post('/productos', verificaToken, createProducto)
-router.put('/productos/:idProducto', updateProducto)
-router.delete('/productos/:idProducto', removeProducto)
+router.put('/productos/:idProducto', verificaToken, updateProducto)
+router.delete('/productos/:idProducto', verificaToken, removeProducto)
 
 module.exports = router
 

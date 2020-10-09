@@ -1,18 +1,23 @@
-const { populate } = require('../models/productoModel');
+
 const productoModel = require('../models/productoModel')
 
 //OBTENER TODOS LOS PRODUCTOS
 exports.getProductos = async (req, res) => {
   try {
+    let limite = parseInt(req.query.limite || 5);   //limitar cuantos productos se pueden mostrar
     const producto = await productoModel
-      .find({})
+      .find({ disponible: true })
+      .limit(limite)
       .populate("usuario", { password: 0 })
       .populate({
         path: "categoria",
-        populate: { path: "usuario" }
-      })
+        populate: { path: "usuario" },
+      });
 
-    res.json(producto);
+    res.json({ ok: true,
+         cantidad: producto.length,
+         productos: producto,
+         });
   } catch (error) {
     res.send(error);
   }
@@ -23,6 +28,8 @@ exports.getProductos = async (req, res) => {
 exports.getProducto = async (req, res) => {
     try {
         const producto = await productoModel.findById({_id: req.params.idProducto})
+        .populate('usuario')
+        .populate('categoria')
         if (!producto) {
             res.json({message: 'el ID no existe'})
         } else {
@@ -34,6 +41,7 @@ exports.getProducto = async (req, res) => {
     }
 }
     
+
 
 //CREA UN PRODUCTO
 exports.createProducto = async (req, res) => {
@@ -76,10 +84,18 @@ exports.updateProducto = async (req, res) => {
 
 //REMOVE UN PRODUCTO
 exports.removeProducto = async (req, res) => {
-    try {
-        const producto = await productoModel.findOneAndDelete({_id: req.params.idProducto})
-        res.json({ok: true, message: 'producto eleminado successfully'})
-    } catch (error) {
-        res.json(error)
+  try {
+    const producto = await productoModel.findOneAndUpdate(
+      { _id: req.params.idProducto },
+      {disponible: false},
+      { new: true }
+    );
+    if (!producto) {
+        res.json({message: 'id no found'})
+    }else {
+        res.json({ ok: true, message: "producto eliminado successfully" });
     }
-}
+  } catch (error) {
+    res.json(error);
+  }
+};
