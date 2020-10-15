@@ -30,7 +30,7 @@ exports.obtenerCategoria = async (req, res) => {
     res.send(error);
   }
 };
-
+ 
 //CREAR CATEGORIAS
 exports.createCategorias = async (req, res) => {
   try {
