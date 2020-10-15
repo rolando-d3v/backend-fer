@@ -100,13 +100,13 @@ exports.removeProducto = async (req, res) => {
   }
 };
 
-// BUSQUEDA SE REALIZO CON UNA EXPRESION REGULAR   (new RegExp)
+// ENDPOINT BUSQUEDA SE REALIZO CON UNA EXPRESION REGULAR   (new RegExp)
 exports.getBusqueda = async (req, res) => {
   try {
     let xtermino = req.params.termino;
     let regTermino = new RegExp(xtermino, "i");   // <=expresion regular
     const buscaPro = await productoModel
-      .find({ nombre: regTermino })
+      .find({nombre: regTermino })
       .populate("categoria");
     res.json(buscaPro);
   } catch (error) {
