@@ -82,7 +82,7 @@ exports.updateProducto = async (req, res) => {
 
 };
 
-//REMOVE UN PRODUCTO
+//REMOVE UN PRODUCTO  (esta funcion no borra solo cambia el disponible a false)
 exports.removeProducto = async (req, res) => {
   try {
     const producto = await productoModel.findOneAndUpdate(
@@ -99,3 +99,17 @@ exports.removeProducto = async (req, res) => {
     res.json(error);
   }
 };
+
+// BUSQUEDA SE REALIZO CON UNA EXPRESION REGULAR   (new RegExp)
+exports.getBusqueda = async (req, res) => {
+  try {
+    let xtermino = req.params.termino;
+    let regTermino = new RegExp(xtermino, "i");   // <=expresion regular
+    const buscaPro = await productoModel
+      .find({ nombre: regTermino })
+      .populate("categoria");
+    res.json(buscaPro);
+  } catch (error) {
+    res.send(error);
+  }
+}

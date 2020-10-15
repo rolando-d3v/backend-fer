@@ -77,8 +77,8 @@ exports.removeCategorias = async (req, res) => {
       res.status(200).json({ ok: true, message: "categoria delete successfully" });
     }
     
-  } catch (error) {
-    res.send(error);
+  } catch (err) {
+    res.send(err);
   }
 };
 
