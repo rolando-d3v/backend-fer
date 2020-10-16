@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 
 // require("dotenv").config()
 require('./db')
@@ -15,8 +16,15 @@ app.listen(port, () => {
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
+//MIDDLEWARE
+app.use(fileUpload())
+
 //routers
 app.use('/', require('./routers/usuario'))
 app.use('/', require('./routers/Login'))
 app.use('/', require('./routers/categorias'))
 app.use('/', require('./routers/productos'))
+app.use('/', require('./routers/upload'))
+
+
+
