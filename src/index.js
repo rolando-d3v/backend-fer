@@ -19,11 +19,12 @@ app.use(bodyParser.json())
 //MIDDLEWARE
 app.use(fileUpload())
 
-//routers
+//ROUTER 
 app.use('/', require('./routers/usuario'))
 app.use('/', require('./routers/Login'))
 app.use('/', require('./routers/categorias'))
 app.use('/', require('./routers/productos'))
+//router para subir files
 app.use('/', require('./routers/upload'))
 
 
